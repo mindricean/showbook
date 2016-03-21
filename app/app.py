@@ -109,7 +109,6 @@ def matching(id_show,id_user) :
 		
 def authenticate(login, password):
 	db = engine.connect()
-	#print login, password
 	try:
 		if db.execute(select([users.c.login]).where(users.c.login == login)).fetchone() != None:
 			sel = select([users]).where(and_(users.c.login == login, users.c.password_hash == hashFor(password)))
@@ -177,7 +176,6 @@ def findShows(username):
 				else :
 					r['person'] = 'Nobody'
 				liste.append(r)
-				#print liste
 			return liste
 		else :
 			return None
@@ -296,7 +294,6 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
 	content = request.get_json(force=True)
-	#print content['Pseudo']
 	res = authenticate(content['Pseudo'], content['Password'])
 	if res[0]:	
 		token = generateToken(content['Pseudo'])
@@ -316,7 +313,6 @@ def validerToken():
 @app.route('/signUp', methods=['POST'])
 def signup():
 	content = request.get_json(force=True)
-	#print content
 	res = signUp(content['Pseudo'], content['FirstName'], content['Surname'] ,content['Email'], content['Password'], content['YearOfBirth'], content['PhoneNumber'], content['Taste'])
 	if res :
 		tok=generateToken(content['Pseudo'])	
@@ -341,7 +337,6 @@ def profile():
 	user = verifyAuthToken(tok)
 	if user != None :
 		res = retrieveProfile(user)
-		#print res
 		return json.dumps({'name':res[0],'surname':res[1],'email':res[2],'date':res[3],'phone':res[4],'login':res[5]})
 	else :
 		return redirect('/')
@@ -367,7 +362,6 @@ def shows():
 	if user != None :
 		res = findShows(user)
 		resultat = []
-		#print res
 		#resultat.append({'name':res[0], 'date':res[1].strftime("%d/%m/%y"), 'salle':res[2], 'places':res[3], 'categorie':res[4], 'person':res[5]})
 		for row in res:
 			print row['salle']
