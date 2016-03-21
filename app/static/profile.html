@@ -1,0 +1,297 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="file:///home/tvelardo/WEB/favicon.ico">
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>ShowBook | Book Concerts and Meet People!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="index_fichiers/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="index_fichiers/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="index_fichiers/ie-emulation-modes-warning.js"></script>
+    <script src="logout.js"></script>
+    <script type="text/javascript" src="index_fichiers/jquery.js"></script>
+	<script type="text/javascript" src="jspdf.js"></script>
+	<script type="text/javascript" src="libs/Deflate/adler32cs.js"></script>
+	<script type="text/javascript" src="libs/FileSaver.js/FileSaver.js"></script>
+	<script type="text/javascript" src="libs/Blob.js/BlobBuilder.js"></script>
+
+	<script type="text/javascript" src="jspdf.plugin.addimage.js"></script>
+
+	<script type="text/javascript" src="jspdf.plugin.standard_fonts_metrics.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.split_text_to_size.js"></script>
+	<script type="text/javascript" src="jspdf.plugin.from_html.js"></script>
+    <script type="text/javascript" src="signin.js"></script>
+ 
+  
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+		var nom;
+		var prenom;
+		var mail;
+		var phone;
+		var err=0;	
+		function pdf(name, salle, cat, pers, imag){
+			var getImageFromUrl = function(URL, callback) {
+				var img = new Image();
+				img.src = URL;
+				img.onload = function () {
+
+
+				var canvas = document.createElement("canvas");
+				canvas.width =this.width;
+				canvas.height =this.height;
+
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(this, 0, 0);
+
+
+				var a= canvas.toDataURL("image/png");
+				a=a.replace(/^data:image\/(png|jpg);base64,/, "")
+				callback(name, salle, cat, pers, a);
+
+				}
+			}
+			
+			var createPdf=function(name, salle, cat, pers, img2){
+				
+
+				var imgData='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAEBAQEBAQEBAQEBAQECAgMCAgICAgQDAwIDBQQFBQUEBQUFBggGBQYHBgUFBwkHBwgICAkIBQYJCgkICggICAj/2wBDAQEBAQICAgQCAgQIBQUFCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAj/wAARCAEiASIDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD+/iiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoor/AHoA/3+KK/wAAeigD/f4or/AHooA/3+KK/wAAeigD/f4or/AHr9/v+DXL/lOv+w1/3Of/AKh2tUAf6/VFFFABRRX8Af8AwfOf84u/+6kf+61QB/f5RX+QL/wa5f8AKdf9hr/uc/8A1Dtar/X6oAKK/wAAev8AX6/4Ncv+UFH7DX/c5/8AqY61QB+/1FfwB/8AB85/zi7/AO6kf+61X8AdAH+/xRX+APRQB/v8UV/gD0UAf7/FFf4A9FAH+/xRX+APX+v1/wAGuX/KCj9hr/uc/wD1MdaoA/f6iiigAooooAKKKKACiiigAooooAK/wB6/3+K/wB6AP9Hz/ggr/wAEFf8Agk9+2j/wSe/ZT/aX/aX/AGU/+FlfG3xL/wAJN/bet/8ACdeJdP8Atv2XxLqllB+4stQit0229vCnyRrnZuOWLMf1+/4hcv8AghR/0Yz/AOZN8Y//AC2o/wCDXL/lBR+w1/3Of/qY61R/wXO/4Lnf8OXP+GXf+MXf+Gk/+Flf8JJ/zO3/AAj39i/2X/Zv/Thdef5v9o/9M9nk/wAW75QA/wCIXL/ghR/0Yz/5k3xj/wDLaj/iFy/4IUf9GM/+ZN8Y/wDy2r8Af+I5z/rF3/5mz/7wUf8AEc5/1i7/APM2f/eCgD9/v+IXL/ghR/0Yz/5k3xj/APLaj/iFy/4IUf8ARjP/AJk3xj/8tq/AH/iOc/6xd/8AmbP/ALwV/X7/AMEuP25/+HlH7CfwM/bV/wCFXf8ACl/+E0/tr/imv7b/ALX/ALN+w6xe6b/x9fZ4PN3/AGPzP9Um3zNvzbdxAP4A/wDg61/4JcfsJ/8ABNf/AIYM/wCGKvgZ/wAKX/4TT/hNv+Em/wCKm1jV/wC0vsP9h/Zf+Qldz+V5f2y5/wBXs3eZ827auPgD/g1y/wCU6/7DX/c5/wDqHa1X7/f8Hzn/ADi7/wC6kf8AutV+AP8Awa5f8p1/2Gv+5z/9Q7WqAP8AX6r/ACBf+Io7/guv/wBHzf8AmMvB3/ypr/X6r/AHoA/2ev8Aggr+1H8dv20f+CT37Kf7S/7S/jr/AIWV8bfEv/CTf23rf9mWen/bfsviXVLKD9xZRRW6bbe3hT5I1zs3HLFmP8wP/B85/wA4u/8AupH/ALrVfv8Af8GuX/KCj9hr/uc//Ux1qvwB/wCD5z/nF3/3Uj/3WqAPwB/4Ncv+U6/7DX/c5/8AqHa1X+v1X+IN/wAEuP25/wDh2v8At2fAz9tX/hV3/C6P+EL/ALa/4pr+2/7I/tL7do97pv8Ax9fZ5/K2fbPM/wBU+7y9vy7tw/r9/wCI5z/rF3/5mz/7wUAfwB1/r9f8GuX/ACgo/Ya/7nP/ANTHWq/AH/iBj/6yif8AmE//AL/1/X7/AMEuP2GP+Ha/7CfwM/Yq/wCFo/8AC6P+EL/tr/ipf7E/sj+0vt2sXupf8ev2ifytn2zy/wDWvu8vd8u7aAD+QL/g+c/5xd/91I/91qv5gv8Aggr+y58Cf20f+CsP7Kf7NH7S/gb/AIWV8EvEv/CTf23ov9p3mn/bfsvhrVL2D9/ZSxXCbbi3hf5JFzs2nKllP9Pv/B85/wA4u/8AupH/ALrVfgD/AMGuX/Kdf9hr/uc//UO1qgD+/wA/4hcv+CFH/RjP/mTfGP8A8tqP+IXL/ghR/wBGM/8AmTfGP/y2r9/q/gD/AOI5z/rF3/5mz/7wUAfv9/xC5f8ABCj/AKMZ/wDMm+Mf/ltR/wAQuX/BCj/oxn/zJvjH/wCW1fgD/wARzn/WLv8A8zZ/94KP+I5z/rF3/wCZs/8AvBQB+/3/ABC5f8EKP+jGf/Mm+Mf/AJbUf8QuX/BCj/oxn/zJvjH/AOW1fAH/AAS4/wCDrX/h5R+3Z8DP2Kv+GDP+FL/8Jp/bX/FS/wDC0f7X/s37Do97qX/Hr/ZEHm7/ALH5f+tTb5m75tu0/wBftAH+APX+v1/wa5f8oKP2Gv8Auc//AFMdar/IFr/X6/4Ncv8AlBR+w1/3Of8A6mOtUAfv9RRRQAUUUUAFFFFABRRRQAUUUUAFf4A9f7/Ff4A9AH+v1/wa5f8AKCj9hr/uc/8A1Mdar8Af+D5z/nF3/wB1I/8Adar9/v8Ag1y/5QUfsNf9zn/6mOtV+AP/AAfOf84u/wDupH/utUAfwB0UUUAFf6/X/Brl/wAoKP2Gv+5z/wDUx1qv8gWv9fr/AINcv+UFH7DX/c5/+pjrVAH4A/8AB85/zi7/AO6kf+61X4A/8GuX/Kdf9hr/ALnP/wBQ7Wq/f7/g+c/5xd/91I/91qvwB/4Ncv8AlOv+w1/3Of8A6h2tUAf6/Vf5Av8AxC5f8F1/+jGf/Mm+Dv8A5bV/r9UUAfkD/wAEFf2XPjt+xd/wSe/ZT/Zo/aX8Df8ACtfjb4a/4Sb+29F/tOz1D7F9q8S6pewfv7KWW3fdb3EL/JI2N+04YMo/ID/g61/4Jcft2f8ABSj/AIYM/wCGKvgZ/wALo/4Qv/hNv+Em/wCKm0fSP7N+3f2H9l/5CV3B5vmfY7n/AFe/b5fzbdy5/r9ooA/yBf8AiFy/4Lr/APRjP/mTfB3/AMtqP+IXL/guv/0Yz/5k3wd/8tq/1+qKAPwB/wCIo7/ghR/0fN/5jLxj/wDKmv1//Zc/aj+BP7aPwJ8DftL/ALNHjr/hZXwS8S/bf7F1v+zLzT/tv2W8nsp/3F7FFcJtuLeZPnjXOzcMqVY/4Q1f6/X/AAa5f8oKP2Gv+5z/APUx1qgD8Af+D5z/AJxd/wDdSP8A3Wq/AH/g1y/5Tr/sNf8Ac5/+odrVfv8Af8Hzn/OLv/upH/utV+AP/Brl/wAp1/2Gv+5z/wDUO1qgD/X6r/AHr/f4r/AHoAKKKKAP3+/4Ncv+U6/7DX/c5/8AqHa1X+v1X+QL/wAGuX/Kdf8AYa/7nP8A9Q7Wq/1+qAP8Aev9fr/g1y/5QUfsNf8Ac5/+pjrVf5Atf6/X/Brl/wAoKP2Gv+5z/wDUx1qgD9/qKKKACiiigAooooAKKKKACiiigAr/AAB6/wB/iv8AAHoA/wBfr/g1y/5QUfsNf9zn/wCpjrVfgD/wfOf84u/+6kf+61X7/f8ABrl/ygo/Ya/7nP8A9THWq+//ANuf/glx+wn/AMFKP+FXf8NrfAz/AIXR/wAIX/aX/CNf8VNrGkf2b9u+zfav+Qbdweb5n2O2/wBZv2+X8u3c2QD/ABBqK/1+v+IXL/ghR/0Yz/5k3xj/APLaj/iFy/4IUf8ARjP/AJk3xj/8tqAP8gWv9fr/AINcv+UFH7DX/c5/+pjrVH/ELl/wQo/6MZ/8yb4x/wDltX6//sufsufAn9i74E+Bv2aP2aPA3/Ctfgl4a+2/2Lov9p3mofYvtV5Pez/v72WW4fdcXEz/ADyNjftGFCqAD+IL/g+c/wCcXf8A3Uj/AN1qvwB/4Ncv+U6/7DX/AHOf/qHa1X7/AH/B85/zi7/7qR/7rVfgD/wa5f8AKdf9hr/uc/8A1DtaoA/1+q/wB6/3+K/wB6ACiiigAor9f/8Aggr+y58Cf20f+CsP7Kf7NH7S/gb/AIWV8EvEv/CTf23ov9p3mn/bfsvhrVL2D9/ZSxXCbbi3hf5JFzs2nKllP+j3/wAQuX/BCj/oxn/zJvjH/wCW1AH+QLX+v1/wa5f8oKP2Gv8Auc//AFMdao/4hcv+CFH/AEYz/wCZN8Y//Lav1/8A2XP2XPgT+xd8CfA37NH7NHgb/hWvwS8Nfbf7F0X+07zUPsX2q8nvZ/397LLcPuuLiZ/nkbG/aMKFUAH8QX/B85/zi7/7qR/7rVfgD/wa5f8AKdf9hr/uc/8A1Dtar9/v+D5z/nF3/wB1I/8Adar8Af8Ag1y/5Tr/ALDX/c5/+odrVAH+v1X+APX+/wAV+AP/ABC5f8EKP+jGf/Mm+Mf/AJbUAf5AtFf6/X/ELl/wQo/6MZ/8yb4x/wDltR/xC5f8EKP+jGf/ADJvjH/5bUAfwB/8GuX/ACnX/Ya/7nP/ANQ7Wq/1+q/IH9lz/ggr/wAEnv2Lvjt4G/aX/Zo/ZT/4Vr8bfDX23+xdb/4TrxLqH2L7VZz2U/7i91CW3fdb3EyfPG2N+4YYKw/X6gD/AAB6/wBfr/g1y/5QUfsNf9zn/wCpjrVf5Atf6/X/AAa5f8oKP2Gv+5z/APUx1qgD9/qKKKACiiigAooooAKKKKACiiigAr/AHr/f4r/IF/4hcv8Aguv/ANGM/wDmTfB3/wAtqAPv/wD4Jcf8HWv/AA7X/YT+Bn7FX/DBn/C6P+EL/tr/AIqX/haP9kf2l9u1i91L/j1/sifytn2zy/8AWvu8vd8u7aPv/wD4jnP+sXf/AJmz/wC8FfgD/wAQuX/Bdf8A6MZ/8yb4O/8AltR/xC5f8F1/+jGf/Mm+Dv8A5bUAfv8Af8Rzn/WLv/zNn/3go/4jnP8ArF3/AOZs/wDvBX4A/wDELl/wXX/6MZ/8yb4O/wDltR/xC5f8F1/+jGf/ADJvg7/5bUAfv9/xHOf9Yu//ADNn/wB4KP8AiOc/6xd/+Zs/+8FfgD/xC5f8F1/+jGf/ADJvg7/5bUf8QuX/AAXX/wCjGf8AzJvg7/5bUAH/AAXO/wCC53/D6P8A4Zd/4xd/4Zs/4Vt/wkn/ADO3/CQ/21/an9m/9OFr5Hlf2d/003+d/Dt+Y/4Ncv8AlOv+w1/3Of8A6h2tUf8AELl/wXX/AOjGf/Mm+Dv/AJbV+v8A/wAEFf8Aggr/AMFYv2Lv+CsP7Kf7S/7S/wCyn/wrX4JeGv8AhJv7b1v/AITrw1qH2L7V4a1Syg/cWWoS3D7ri4hT5I2xv3HChmAB/o91/gD1/v8AFf4A9AH9fv8AwS4/4NSv+HlH7CfwM/bV/wCG8/8AhS//AAmn9tf8U1/wq7+1/wCzfsOsXum/8fX9rwebv+x+Z/qk2+Zt+bbuPwB/wXO/4IY/8OXP+GXf+Mov+Gk/+Flf8JJ/zJP/AAj39i/2X/Zv/T/def5v9o/9M9nk/wAW75f7/P8Ag1y/5QUfsNf9zn/6mOtV8Af8HWv/AAS4/bs/4KUf8MGf8MVfAz/hdH/CF/8ACbf8JN/xU2j6R/Zv27+w/sv/ACEruDzfM+x3P+r37fL+bbuXIB/IF/wa5f8AKdf9hr/uc/8A1Dtar/X6r/OE/wCCCv8AwQV/4KxfsXf8FYf2U/2l/wBpf9lP/hWvwS8Nf8JN/bet/wDCdeGtQ+xfavDWqWUH7iy1CW4fdcXEKfJG2N+44UMw/wBHugD+AP8A4jnP+sXf/mbP/vBX9fv/AAS4/bn/AOHlH7CfwM/bV/4Vd/wpf/hNP7a/4pr+2/7X/s37DrF7pv8Ax9fZ4PN3/Y/M/wBUm3zNvzbdx/zBP+IXL/guv/0Yz/5k3wd/8tq/0fP+CCv7Lnx2/Yu/4JPfsp/s0ftL+Bv+Fa/G3w1/wk39t6L/AGnZ6h9i+1eJdUvYP39lLLbvut7iF/kkbG/acMGUAH8wP/B85/zi7/7qR/7rVfyBf8EuP25/+Ha/7dnwM/bV/wCFXf8AC6P+EL/tr/imv7b/ALI/tL7do97pv/H19nn8rZ9s8z/VPu8vb8u7cP7/AD/g61/4Jcft2f8ABSj/AIYM/wCGKvgZ/wALo/4Qv/hNv+Em/wCKm0fSP7N+3f2H9l/5CV3B5vmfY7n/AFe/b5fzbdy5/kC/4hcv+C6//RjP/mTfB3/y2oA/f7/iOc/6xd/+Zs/+8FH/ABHOf9Yu/wDzNn/3gr8Af+IXL/guv/0Yz/5k3wd/8tqP+IXL/guv/wBGM/8AmTfB3/y2oA/f7/iOc/6xd/8AmbP/ALwUf8Rzn/WLv/zNn/3gr8Af+IXL/guv/wBGM/8AmTfB3/y2o/4hcv8Aguv/ANGM/wDmTfB3/wAtqAP3+/4jnP8ArF3/AOZs/wDvBR/xHOf9Yu//ADNn/wB4K/AH/iFy/wCC6/8A0Yz/AOZN8Hf/AC2o/wCIXL/guv8A9GM/+ZN8Hf8Ay2oA/AGv9fr/AINcv+UFH7DX/c5/+pjrVfwB/wDELl/wXX/6MZ/8yb4O/wDltX+j5/wQV/Zc+O37F3/BJ79lP9mj9pfwN/wrX42+Gv8AhJv7b0X+07PUPsX2rxLql7B+/spZbd91vcQv8kjY37ThgygA/X6iiigAooooAKKKKACiiigAooooAKKK/wAAegD/AH+KK/wB6/v8/wCDGP8A5yi/903/APdloA/v8or8Af8Ag6O/5QUftzf9yZ/6mOi1/kC0Af7/ABRRRQAUV/AH/wAHzn/OLv8A7qR/7rVfwB0Af7/Ff4A9Ff7/ABQB+AP/AAa5f8oKP2Gv+5z/APUx1qv3+or+AP8A4PnP+cXf/dSP/daoA/v8or/AHooA/wB/iiv8Aev9fr/g1y/5QUfsNf8Ac5/+pjrVAH7/AFFfwB/8Hzn/ADi7/wC6kf8AutV/AHQB/v8AFFf4A9FAH+/xRX4A/wDBrl/ygo/Ya/7nP/1Mdar8Af8Ag+c/5xd/91I/91qgD+/yiv8AAHooA/3+KKKKACiiigAooooAKKKKACiiigAooooAK/wB6/3+K/gD/wCIGP8A6yif+YT/APv/AEAfwB1/f5/wYx/85Rf+6b/+7LR/xAx/9ZRP/MJ//f8Ar9/v+CGP/BDH/hy5/wANRf8AGUX/AA0n/wALK/4Rv/mSf+Ee/sX+y/7S/wCn+68/zf7R/wCmezyf4t3ygH6//tR/sufAn9tH4E+Of2aP2l/A3/Cyvgl4l+xf23ov9p3mn/bfst5Bewfv7KWK4TbcW8L/ACSLnZtOVLKfyA/4hcv+CFH/AEYz/wCZN8Y//Lav3+ooA/yBf+Io7/guv/0fN/5jLwd/8qaP+Io7/guv/wBHzf8AmMvB3/ypr9/v+IGP/rKJ/wCYT/8Av/R/xAx/9ZRP/MJ//f8AoAP+CGP/AB0of8NRf8Pq/wDjND/hS/8Awjf/AArT/mUf+Ea/tz+0v7U/5Fz7B9q8/wDsfTv+PnzfL+z/ALvZvk3/AEB/wXq/4IK/8Env2Lv+CT37Vn7S/wCzR+yn/wAK1+Nvhr/hGf7F1v8A4TrxLqH2L7V4l0uyn/cXuoS277re4mT542xv3DDBWHz/AP8AKl1/1km/4aT/AO6ff8IX/wAIx/4Nft32r/hIf+mHlfY/+Wvm/uz/AIfnf8RKH/GlT/hl3/hi/wD4XR/zUv8A4Tb/AIS7/hG/7D/4qP8A5Bf2Cw+1ef8A2P8AZv8Aj7i8v7R5vz7PLcA/gDr9/v8AiKO/4Lr/APR83/mMvB3/AMqa/f7/AIgY/wDrKJ/5hP8A+/8AX8AdAH+z1/wQV/aj+O37aP8AwSe/ZT/aX/aX8df8LK+NviX/AISb+29b/syz0/7b9l8S6pZQfuLKKK3Tbb28KfJGudm45Ysx/mB/4PnP+cXf/dSP/dar4A/4Jcf8HWv/AA7X/YT+Bn7FX/DBn/C6P+EL/tr/AIqX/haP9kf2l9u1i91L/j1/sifytn2zy/8AWvu8vd8u7aPgD/gud/wXO/4fR/8ADLv/ABi7/wAM2f8ACtv+Ek/5nb/hIf7a/tT+zf8ApwtfI8r+zv8Appv87+Hb8wB+ANFFFAH+v1/xC5f8EKP+jGf/ADJvjH/5bV/IF/wVH/4Kj/t2f8EXP27Pjn/wTR/4Jo/HP/hmz9iX4bf2L/whXgr/AIRnR/EP9i/2po9lrN9/p2s2l1fz+bf6jeTfvp5NnnbE2xqiL/p91/IF/wAFR/8Ag1K/4eUft2fHP9tX/hvP/hS//Caf2L/xTX/Crv7X/s37Do9lpv8Ax9f2vB5u/wCx+Z/qk2+Zt+bbuIB/AH+3P/wVH/bs/wCClH/Crv8Ahtb45/8AC6P+EL/tL/hGv+KZ0fSP7N+3fZvtX/INtIPN8z7Hbf6zft8v5du5s/AFfv8Af8Fzv+CGP/Dlz/hl3/jKL/hpP/hZX/CSf8yT/wAI9/Yv9l/2b/0/3Xn+b/aP/TPZ5P8AFu+X4A/4JcfsMf8ADyj9uz4GfsVf8LR/4Uv/AMJp/bX/ABUv9if2v/Zv2HR73Uv+PX7RB5u/7H5f+tTb5m75tu0gHwBRX9/n/EDH/wBZRP8AzCf/AN/6P+IGP/rKJ/5hP/7/ANAH7/f8GuX/ACgo/Ya/7nP/ANTHWq+//wBuf/glx+wn/wAFKP8AhV3/AA2t8DP+F0f8IX/aX/CNf8VNrGkf2b9u+zfav+Qbdweb5n2O2/1m/b5fy7dzZ/kC/wCH53/ENf8A8aVP+GXf+G0P+FL/APNS/wDhNv8AhEf+Ek/tz/io/wDkF/YL/wCy+R/bH2b/AI+5fM+z+b8m/wAtD/iOc/6xd/8AmbP/ALwUAfQH/Ber/ggr/wAEnv2Lv+CT37Vn7S/7NH7Kf/Ctfjb4a/4Rn+xdb/4TrxLqH2L7V4l0uyn/AHF7qEtu+63uJk+eNsb9wwwVh/nB1/f5/wAPzv8AiJQ/40qf8Mu/8MX/APC6P+al/wDCbf8ACXf8I3/Yf/FR/wDIL+wWH2rz/wCx/s3/AB9xeX9o8359nluf8QMf/WUT/wAwn/8Af+gD8Af+Io7/AILr/wDR83/mMvB3/wAqa/0fP+CCv7Ufx2/bR/4JPfsp/tL/ALS/jr/hZXxt8S/8JN/bet/2ZZ6f9t+y+JdUsoP3FlFFbptt7eFPkjXOzccsWY/4wtf6/X/Brl/ygo/Ya/7nP/1MdaoA/f6iiigAooooAKKKKACiiigAooooAK/AH/iKO/4IUf8AR83/AJjLxj/8qa/f6v8AAHoA/wBfr/iKO/4IUf8AR83/AJjLxj/8qaP+Io7/AIIUf9Hzf+Yy8Y//ACpr/IFooA/2ev2XP+C9X/BJ79tH47eBv2aP2aP2rP8AhZXxt8S/bf7F0X/hBfEun/bfstnPez/v73T4rdNtvbzP88i52bRliqn9fq/yBf8Ag1y/5Tr/ALDX/c5/+odrVf6/VABRRRQB/IF/wda/8EuP27P+ClH/AAwZ/wAMVfAz/hdH/CF/8Jt/wk3/ABU2j6R/Zv27+w/sv/ISu4PN8z7Hc/6vft8v5tu5c/gD/wAEuP8Aglx+3Z/wRc/bs+Bn/BS7/gpd8DP+GbP2Jfht/bX/AAmvjX/hJtH8Q/2L/amj3ujWP+g6Nd3V/P5t/qNnD+5gk2edvfbGruv+n3X4A/8AB0d/ygo/bm/7kz/1MdFoAP8AiKO/4IUf9Hzf+Yy8Y/8Aypr+AP8A4hcv+C6//RjP/mTfB3/y2r8Aa/3+KAP8If8Aaj/Zc+O37F3x28c/s0ftL+Bv+Fa/G3w19i/tvRf7Ts9Q+xfarOC9g/f2Ustu+63uIX+SRsb9pwwZR7/+wx/wS4/bs/4KUf8AC0f+GKvgZ/wuj/hC/wCzf+Em/wCKm0fSP7N+3fafsv8AyEruDzfM+x3P+r37fL+bbuXP3/8A8HR3/Kdf9ub/ALkz/wBQ7Ra/f7/gxj/5yi/903/92WgD8Af+IXL/AILr/wDRjP8A5k3wd/8ALaj/AIhcv+C6/wD0Yz/5k3wd/wDLav8AX6ooA/AH/iKO/wCCFH/R83/mMvGP/wAqaP8AiKO/4IUf9Hzf+Yy8Y/8Aypr/ACBaKAP6/f8Ag61/4Kj/ALCf/BSj/hgz/hir45/8Lo/4Qv8A4Tb/AISb/imdY0j+zft39h/Zf+QlaQeb5n2O5/1e/b5fzbdy5/IH/ggr+1H8Cf2Lv+CsP7Kf7S/7S/jr/hWvwS8Nf8JN/bet/wBmXmofYvtXhrVLKD9xZRS3D7ri4hT5I2xv3HChmH5AUUAf6/X/ABFHf8EKP+j5v/MZeMf/AJU0f8RR3/BCj/o+b/zGXjH/AOVNf5AtFAH6/wD/AAXq/aj+BP7aP/BWH9qz9pf9mjx1/wALK+CXiX/hGf7F1v8Asy80/wC2/ZfDWl2U/wC4vYorhNtxbzJ88a52bhlSrH5//YY/4Jcft2f8FKP+Fo/8MVfAz/hdH/CF/wBm/wDCTf8AFTaPpH9m/bvtP2X/AJCV3B5vmfY7n/V79vl/Nt3Ln4Ar+/z/AIMY/wDnKL/3Tf8A92WgD4A/4Jcf8EuP27P+CLn7dnwM/wCCl3/BS74Gf8M2fsS/Db+2v+E18a/8JNo/iH+xf7U0e90ax/0HRru6v5/Nv9Rs4f3MEmzzt77Y1d1/r9/4ijv+CFH/AEfN/wCYy8Y//Kmj/g6O/wCUFH7c3/cmf+pjotf5AtABX+v1/wAGuX/KCj9hr/uc/wD1Mdar/IFr/X6/4Ncv+UFH7DX/AHOf/qY61QB+/wBRRRQAUUUUAFFFFABRRRQAUUUUAFf4A9f7/FfgD/xC5f8ABCj/AKMZ/wDMm+Mf/ltQAf8ABrl/ygo/Ya/7nP8A9THWq/AH/g+c/wCcXf8A3Uj/AN1qv7ff2XP2XPgT+xd8CfA37NH7NHgb/hWvwS8Nfbf7F0X+07zUPsX2q8nvZ/397LLcPuuLiZ/nkbG/aMKFUfP/AO3P/wAEuP2E/wDgpR/wq7/htb4Gf8Lo/wCEL/tL/hGv+Km1jSP7N+3fZvtX/INu4PN8z7Hbf6zft8v5du5sgH+YJ/wa5f8AKdf9hr/uc/8A1Dtar/X6r8gf2XP+CCv/AASe/Yu+O3gb9pf9mj9lP/hWvxt8Nfbf7F1v/hOvEuofYvtVnPZT/uL3UJbd91vcTJ88bY37hhgrD9fqACiiigD+AP8A4PnP+cXf/dSP/dar8Af+DXL/AJTr/sNf9zn/AOodrVf6ff7c/wDwS4/YT/4KUf8ACrv+G1vgZ/wuj/hC/wC0v+Ea/wCKm1jSP7N+3fZvtX/INu4PN8z7Hbf6zft8v5du5s+Afsuf8EFf+CT37F3x28DftL/s0fsp/wDCtfjb4a+2/wBi63/wnXiXUPsX2qznsp/3F7qEtu+63uJk+eNsb9wwwVgAfr9X+APX+/xX+APQB/r9f8GuX/KCj9hr/uc//Ux1qv3+r/GG/Zc/4L1f8FYv2LvgT4G/Zo/Zo/as/wCFa/BLw19t/sXRf+EF8Nah9i+1Xk97P+/vdPluH3XFxM/zyNjftGFCqPf/APiKO/4Lr/8AR83/AJjLwd/8qaAP7/P+Do7/AJQUftzf9yZ/6mOi1/kC1/X7/wAEuP8AgqP+3Z/wWj/bs+Bn/BNH/gpd8c/+Gk/2JfiV/bX/AAmvgr/hGdH8Pf21/Zej3us2P+naNaWt/B5V/p1nN+5nj3+TsfdGzo39fv8AxC5f8EKP+jGf/Mm+Mf8A5bUAfv8AUUV/nCf8F6v+C9X/AAVi/Yu/4Kw/tWfs0fs0ftWf8K1+CXhr/hGf7F0X/hBfDWofYvtXhrS72f8Af3uny3D7ri4mf55Gxv2jChVAB7//AMHzn/OLv/upH/utV+AP/Brl/wAp1/2Gv+5z/wDUO1qvgD9uf/gqP+3Z/wAFKP8AhV3/AA2t8c/+F0f8IX/aX/CNf8Uzo+kf2b9u+zfav+QbaQeb5n2O2/1m/b5fy7dzZ+//APg1y/5Tr/sNf9zn/wCodrVAH+v1RRRQAUUV/IF/wda/8FR/27P+Ca//AAwZ/wAMVfHP/hS//Caf8Jt/wk3/ABTOj6v/AGl9h/sP7L/yErSfyvL+2XP+r2bvM+bdtXAB/X7RX+cJ/wAEFf8AgvV/wVi/bR/4Kw/sp/s0ftL/ALVn/Cyvgl4l/wCEm/tvRf8AhBfDWn/bfsvhrVL2D9/ZafFcJtuLeF/kkXOzacqWU/6PdABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABX8Af/ABHOf9Yu/wDzNn/3gr+/yv8AAHoA/v8AP+I5z/rF3/5mz/7wUf8AEc5/1i7/APM2f/eCv5gv2XP+CCv/AAVi/bR+BPgb9pf9mj9lP/hZXwS8S/bf7F1v/hOvDWn/AG37LeT2U/7i91CK4TbcW8yfPGudm4ZUqx9//wCIXL/guv8A9GM/+ZN8Hf8Ay2oA/f7/AIjnP+sXf/mbP/vBR/xHOf8AWLv/AMzZ/wDeCvwB/wCIXL/guv8A9GM/+ZN8Hf8Ay2o/4hcv+C6//RjP/mTfB3/y2oA/f7/iOc/6xd/+Zs/+8FH/ABHOf9Yu/wDzNn/3gr8Af+IXL/guv/0Yz/5k3wd/8tqP+IXL/guv/wBGM/8AmTfB3/y2oA/f7/iOc/6xd/8AmbP/ALwV9/8A/BLj/g61/wCHlH7dnwM/Yq/4YM/4Uv8A8Jp/bX/FS/8AC0f7X/s37Do97qX/AB6/2RB5u/7H5f8ArU2+Zu+bbtP8Af7c/wDwS4/bs/4Jr/8ACrv+G1vgZ/wpf/hNP7S/4Rr/AIqbR9X/ALS+w/ZvtX/INu5/K8v7Zbf6zZu8z5d21sff/wDwa5f8p1/2Gv8Auc//AFDtaoA/1+q/wB6/3+K/yBf+IXL/AILr/wDRjP8A5k3wd/8ALagD7/8A+CXH/BqV/wAPKP2E/gZ+2r/w3n/wpf8A4TT+2v8Aimv+FXf2v/Zv2HWL3Tf+Pr+14PN3/Y/M/wBUm3zNvzbdx+AP+C53/BDH/hy5/wAMu/8AGUX/AA0n/wALK/4ST/mSf+Ee/sX+y/7N/wCn+68/zf7R/wCmezyf4t3y/wBfv/BLj/gqP+wn/wAEXP2E/gZ/wTR/4KXfHP8A4Zs/ba+G39tf8Jr4K/4RnWPEP9i/2prF7rNj/p2jWl1YT+bYajZzfuZ5NnnbH2yK6L+AP/B1r/wVH/YT/wCClH/DBn/DFXxz/wCF0f8ACF/8Jt/wk3/FM6xpH9m/bv7D+y/8hK0g83zPsdz/AKvft8v5tu5cgH4A/wDBLj9uf/h2v+3Z8DP21f8AhV3/AAuj/hC/7a/4pr+2/wCyP7S+3aPe6b/x9fZ5/K2fbPM/1T7vL2/Lu3D+v3/iOc/6xd/+Zs/+8FfxB/sufsufHb9tH47eBv2aP2aPA3/Cyvjb4l+2/wBi6L/adnp/237LZz3s/wC/vZYrdNtvbzP88i52bRliqn9fv+IXL/guv/0Yz/5k3wd/8tqAP3+/4jnP+sXf/mbP/vBR/wAOMf8AiJQ/43V/8NRf8MX/APC6P+aaf8IT/wAJd/wjf9h/8U5/yFPt9h9q8/8Asf7T/wAekXl/aPK+fZ5j/gD/AMQuX/Bdf/oxn/zJvg7/AOW1f6Pn/BBX9lz47fsXf8Env2U/2aP2l/A3/Ctfjb4a/wCEm/tvRf7Ts9Q+xfavEuqXsH7+yllt33W9xC/ySNjftOGDKAD/ADg/+C53/BDH/hy5/wAMu/8AGUX/AA0n/wALK/4ST/mSf+Ee/sX+y/7N/wCn+68/zf7R/wCmezyf4t3yn/Brl/ynX/Ya/wC5z/8AUO1qv3+/4PnP+cXf/dSP/dar+YL/AIIK/tR/An9i7/grD+yn+0v+0v46/wCFa/BLw1/wk39t63/Zl5qH2L7V4a1Syg/cWUUtw+64uIU+SNsb9xwoZgAf7PNfwB/8Rzn/AFi7/wDM2f8A3gr9/v8AiKO/4IUf9Hzf+Yy8Y/8Aypr+AP8A4hcv+C6//RjP/mTfB3/y2oA/f7/iOc/6xd/+Zs/+8FfgD/wXO/4Lnf8AD6P/AIZd/wCMXf8Ahmz/AIVt/wAJJ/zO3/CQ/wBtf2p/Zv8A04WvkeV/Z3/TTf538O35j/iFy/4Lr/8ARjP/AJk3wd/8tqP+IXL/AILr/wDRjP8A5k3wd/8ALagD4A/4Jcftz/8ADtf9uz4Gftq/8Ku/4XR/whf9tf8AFNf23/ZH9pfbtHvdN/4+vs8/lbPtnmf6p93l7fl3bh/X7/xHOf8AWLv/AMzZ/wDeCv5gv2o/+CCv/BWL9i74E+Of2l/2l/2U/wDhWvwS8NfYv7b1v/hOvDWofYvtV5BZQfuLLUJbh91xcQp8kbY37jhQzD8gKAP9/iiiigAooooAKKKKACiiigAooooAKKKKACv8Aev9/iv8AegD/X6/4Ncv+UFH7DX/AHOf/qY61X7/AFfgD/wa5f8AKCj9hr/uc/8A1Mdar8Af+D5z/nF3/wB1I/8AdaoA/v8AKK/wB6KAP9/iiv8AAHr/AF+v+DXL/lBR+w1/3Of/AKmOtUAfgD/wfOf84u/+6kf+61X4A/8ABrl/ynX/AGGv+5z/APUO1qv3+/4PnP8AnF3/AN1I/wDdar8Af+DXL/lOv+w1/wBzn/6h2tUAf6/VFFFAH+QL/wAHR3/Kdf8Abm/7kz/1DtFr8Aa/3+KKAP8AIF/4Ncv+U6/7DX/c5/8AqHa1X+v1RRQAUV/gD0UAf3+f8Hzn/OLv/upH/utV/AHRX7/f8GuX/Kdf9hr/ALnP/wBQ7WqAPwBr/f4oooAKKKKAPwB/4Ojv+UFH7c3/AHJn/qY6LX+QLX+v1/wdHf8AKCj9ub/uTP8A1MdFr/IFoA/3+KKKKACiiigAooooAKKKKACiiigAooooAK/wB6/3+K/wB6AP9fr/AINcv+UFH7DX/c5/+pjrVfgD/wAHzn/OLv8A7qR/7rVfv9/wa5f8oKP2Gv8Auc//AFMdar8Af+D5z/nF3/3Uj/3WqAP4A6KKKACv9fr/AINcv+UFH7DX/c5/+pjrVf5Atf6/X/Brl/ygo/Ya/wC5z/8AUx1qgD8Af+D5z/nF3/3Uj/3Wq/AH/g1y/wCU6/7DX/c5/wDqHa1X7/f8Hzn/ADi7/wC6kf8AutV+AP8Awa5f8p1/2Gv+5z/9Q7WqAP8AX6r/ACBf+Io7/guv/wBHzf8AmMvB3/ypr/X6r+AP/iBj/wCson/mE/8A7/0Af0/f8EFf2o/jt+2j/wAEnv2U/wBpf9pfx1/wsr42+Jf+Em/tvW/7Ms9P+2/ZfEuqWUH7iyiit0229vCnyRrnZuOWLMfyA/4Otf8AgqP+3Z/wTX/4YM/4Yq+Of/Cl/wDhNP8AhNv+Em/4pnR9X/tL7D/Yf2X/AJCVpP5Xl/bLn/V7N3mfNu2rj4A/4fnf8Q1//GlT/hl3/htD/hS//NS/+E2/4RH/AIST+3P+Kj/5Bf2C/wDsvkf2x9m/4+5fM+z+b8m/y0P+V0X/AKxs/wDDNn/dQf8AhNP+En/8FX2H7L/wj3/Tfzftn/LLyv3gB4B/wQV/4L1f8FYv20f+CsP7Kf7NH7S/7Vn/AAsr4JeJf+Em/tvRf+EF8Naf9t+y+GtUvYP39lp8Vwm24t4X+SRc7NpypZT/AKPdfwB/8OMf+Ia//jdX/wANRf8ADaH/AApf/mmn/CE/8Ij/AMJJ/bn/ABTn/IU+33/2XyP7Y+0/8ekvmfZ/K+Tf5iH/ABHOf9Yu/wDzNn/3goA/f7/iFy/4IUf9GM/+ZN8Y/wDy2r/OE/4L1fsufAn9i7/grD+1Z+zR+zR4G/4Vr8EvDX/CM/2Lov8Aad5qH2L7V4a0u9n/AH97LLcPuuLiZ/nkbG/aMKFUf7PNf5Av/B0d/wAp1/25v+5M/wDUO0WgD8Aa+gP2XP2o/jt+xd8dvA37S/7NHjr/AIVr8bfDX23+xdb/ALMs9Q+xfarOeyn/AHF7FLbvut7iZPnjbG/cMMFYfP8AX3//AMEuP2GP+HlH7dnwM/Yq/wCFo/8ACl/+E0/tr/ipf7E/tf8As37Do97qX/Hr9og83f8AY/L/ANam3zN3zbdpAPv/AP4ijv8Aguv/ANHzf+Yy8Hf/ACpo/wCIo7/guv8A9Hzf+Yy8Hf8Aypr9/v8AiBj/AOson/mE/wD7/wBfwB0Afv8Af8RR3/Bdf/o+b/zGXg7/AOVNH/EUd/wXX/6Pm/8AMZeDv/lTX3//AMEuP+DUr/h5R+wn8DP21f8AhvP/AIUv/wAJp/bX/FNf8Ku/tf8As37DrF7pv/H1/a8Hm7/sfmf6pNvmbfm27j8Af8Fzv+CGP/Dlz/hl3/jKL/hpP/hZX/CSf8yT/wAI9/Yv9l/2b/0/3Xn+b/aP/TPZ5P8AFu+UA8A/aj/4L1f8FYv20fgT45/Zo/aX/as/4WV8EvEv2L+29F/4QXw1p/237LeQXsH7+y0+K4TbcW8L/JIudm05Usp/ICvv/wD4JcfsMf8ADyj9uz4GfsVf8LR/4Uv/AMJp/bX/ABUv9if2v/Zv2HR73Uv+PX7RB5u/7H5f+tTb5m75tu0/1+/8QMf/AFlE/wDMJ/8A3/oA/AH/AIijv+C6/wD0fN/5jLwd/wDKmv8AR8/4IK/tR/Hb9tH/AIJPfsp/tL/tL+Ov+FlfG3xL/wAJN/bet/2ZZ6f9t+y+JdUsoP3FlFFbptt7eFPkjXOzccsWY/4wtf6/X/Brl/ygo/Ya/wC5z/8AUx1qgD9/qKKKACiiigAooooAKKKKACiiigAr/AHr/f4r/AHoA/1+v+DXL/lBR+w1/wBzn/6mOtV8Af8AB1r/AMEuP27P+ClH/DBn/DFXwM/4XR/whf8Awm3/AAk3/FTaPpH9m/bv7D+y/wDISu4PN8z7Hc/6vft8v5tu5c/f/wDwa5f8oKP2Gv8Auc//AFMdar9/qAP8gX/iFy/4Lr/9GM/+ZN8Hf/Laj/iFy/4Lr/8ARjP/AJk3wd/8tq/1+qKAP8gX/iFy/wCC6/8A0Yz/AOZN8Hf/AC2r/R8/4IK/sufHb9i7/gk9+yn+zR+0v4G/4Vr8bfDX/CTf23ov9p2eofYvtXiXVL2D9/ZSy277re4hf5JGxv2nDBlH6/UUAfwB/wDB85/zi7/7qR/7rVfgD/wa5f8AKdf9hr/uc/8A1Dtar9/v+D5z/nF3/wB1I/8Adar8Af8Ag1y/5Tr/ALDX/c5/+odrVAH+v1X4A/8AEUd/wQo/6Pm/8xl4x/8AlTX7/V/gD0Af1+/8FR/+CXH7dn/BaP8Abs+Of/BS7/gmj8DP+Gk/2JfiV/Yv/CFeNf8AhJtH8Pf21/Zej2WjX3+g6zd2t/B5V/p15D++gj3+TvTdGyO33/8A8EMf+Oa//hqL/h9X/wAYX/8AC6P+Eb/4Vp/zN3/CS/2H/aX9qf8AIufb/svkf2xp3/Hz5XmfaP3e/ZJs/f7/AINcv+UFH7DX/c5/+pjrVfgD/wAHzn/OLv8A7qR/7rVAH0B/wXq/4L1f8Env20f+CT37Vn7NH7NH7Vn/AAsr42+Jf+EZ/sXRf+EF8S6f9t+y+JdLvZ/397p8Vum23t5n+eRc7NoyxVT/AJwdFFAH+v1/xFHf8EKP+j5v/MZeMf8A5U1/IF/wVH/4Jcft2f8ABaP9uz45/wDBS7/gmj8DP+Gk/wBiX4lf2L/whXjX/hJtH8Pf21/Zej2WjX3+g6zd2t/B5V/p15D++gj3+TvTdGyO38gVf6/X/Brl/wAoKP2Gv+5z/wDUx1qgD+AP/iFy/wCC6/8A0Yz/AOZN8Hf/AC2r9f8A/ggr/wAEFf8AgrF+xd/wVh/ZT/aX/aX/AGU/+Fa/BLw1/wAJN/bet/8ACdeGtQ+xfavDWqWUH7iy1CW4fdcXEKfJG2N+44UMw/0e6KACv8gX/iFy/wCC6/8A0Yz/AOZN8Hf/AC2r/X6ooA/IH/ggr+y58dv2Lv8Agk9+yn+zR+0v4G/4Vr8bfDX/AAk39t6L/adnqH2L7V4l1S9g/f2Ustu+63uIX+SRsb9pwwZR+QH/AAda/wDBLj9uz/gpR/wwZ/wxV8DP+F0f8IX/AMJt/wAJN/xU2j6R/Zv27+w/sv8AyEruDzfM+x3P+r37fL+bbuXP9ftFAH+cJ/wQV/4IK/8ABWL9i7/grD+yn+0v+0v+yn/wrX4JeGv+Em/tvW/+E68Nah9i+1eGtUsoP3FlqEtw+64uIU+SNsb9xwoZh/o90UUAf5Av/ELl/wAF1/8Aoxn/AMyb4O/+W1f6Pn/BBX9lz47fsXf8Env2U/2aP2l/A3/Ctfjb4a/4Sb+29F/tOz1D7F9q8S6pewfv7KWW3fdb3EL/ACSNjftOGDKP1+ooAKKKKACiiigAooooAKKKKACiiigAr/AHr/f4r8Af+IXL/ghR/wBGM/8AmTfGP/y2oA/yBaK/1+v+IXL/AIIUf9GM/wDmTfGP/wAtqP8AiFy/4IUf9GM/+ZN8Y/8Ay2oA/wAgWiv9fr/iFy/4IUf9GM/+ZN8Y/wDy2o/4hcv+CFH/AEYz/wCZN8Y//LagD/IFor/X6/4hcv8AghR/0Yz/AOZN8Y//AC2o/wCIXL/ghR/0Yz/5k3xj/wDLagD/ACBa/f7/AINcv+U6/wCw1/3Of/qHa1X9/n/ELl/wQo/6MZ/8yb4x/wDltX0B+y5/wQV/4JPfsXfHbwN+0v8As0fsp/8ACtfjb4a+2/2Lrf8AwnXiXUPsX2qznsp/3F7qEtu+63uJk+eNsb9wwwVgAfr9X+APX+/xX4A/8QuX/BCj/oxn/wAyb4x/+W1AB/wa5f8AKCj9hr/uc/8A1Mdar8Af+D5z/nF3/wB1I/8Adar+339lz9lz4E/sXfAnwN+zR+zR4G/4Vr8EvDX23+xdF/tO81D7F9qvJ72f9/eyy3D7ri4mf55Gxv2jChVHz/8Atz/8EuP2E/8AgpR/wq7/AIbW+Bn/AAuj/hC/7S/4Rr/iptY0j+zft32b7V/yDbuDzfM+x23+s37fL+XbubIB/mCf8GuX/Kdf9hr/ALnP/wBQ7Wq/1+q/IH9lz/ggr/wSe/Yu+O3gb9pf9mj9lP8A4Vr8bfDX23+xdb/4TrxLqH2L7VZz2U/7i91CW3fdb3EyfPG2N+4YYKw/X6gAr/IF/wCDo7/lOv8Atzf9yZ/6h2i1/r9V+QP7Uf8AwQV/4JPfto/Hbxz+0v8AtL/sp/8ACyvjb4l+xf23rf8AwnXiXT/tv2WzgsoP3FlqEVum23t4U+SNc7NxyxZiAfzA/wDBjH/zlF/7pv8A+7LX7/f8HR3/ACgo/bm/7kz/ANTHRa+//wBhj/glx+wn/wAE1/8AhaP/AAxV8DP+FL/8Jp/Zv/CTf8VNrGr/ANpfYftP2X/kJXc/leX9suf9Xs3eZ827auPoD9qP9lz4E/to/Anxz+zR+0v4G/4WV8EvEv2L+29F/tO80/7b9lvIL2D9/ZSxXCbbi3hf5JFzs2nKllIB/hDV/v8AFfgD/wAQuX/BCj/oxn/zJvjH/wCW1fv9QB/kC/8AB0d/ynX/AG5v+5M/9Q7Ra/f7/gxj/wCcov8A3Tf/AN2Wv6fv2o/+CCv/AASe/bR+O3jn9pf9pf8AZT/4WV8bfEv2L+29b/4TrxLp/wBt+y2cFlB+4stQit0229vCnyRrnZuOWLMff/2GP+CXH7Cf/BNf/haP/DFXwM/4Uv8A8Jp/Zv8Awk3/ABU2sav/AGl9h+0/Zf8AkJXc/leX9suf9Xs3eZ827auAD4A/4Ojv+UFH7c3/AHJn/qY6LX+QLX+7z+1H+y58Cf20fgT45/Zo/aX8Df8ACyvgl4l+xf23ov8Aad5p/wBt+y3kF7B+/spYrhNtxbwv8ki52bTlSyn8gP8AiFy/4IUf9GM/+ZN8Y/8Ay2oA/f6iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/9k=';
+				var doc = new jsPDF();
+				console.log('je vais '+img2);
+
+				doc.setFontSize(22);
+				doc.text(75, 20, 'SHOWBOOK - Ticket');
+				doc.text(20, 30, name);	
+				doc.text(20, 40, pers + ' people.');	
+				doc.setFontSize(16);
+				doc.text(20, 60, 'Venue : '+salle);	
+				doc.text(20, 70, 'Category : ' +cat);
+				doc.setFontSize(10);
+				doc.text(5, 5, nom + ' ' + prenom);
+				var imm=img2
+
+				//imm.style.width= '200px';  
+				//imm.style.height= '200px';  
+				doc.addImage(imgData, 'JPEG', 75, 80, 40,40);	
+				//doc.addImage(imm, 'JPEG', 90, 80, 40,40);	
+				//doc.text(20, 30, 'This is some normal sized text underneath.');
+
+				doc.save('Showbook_Ticket.pdf');
+					
+			}
+		getImageFromUrl('..'+imag, createPdf);
+	}
+			
+					
+
+		window.onload=function(){
+		var tok=localStorage.getItem("token");
+		$.ajax({
+			type:"POST",
+            url: "/users",        
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+				Token: tok,
+			}),
+            success: function(data){
+				var html= ' <a class="pseudo-navbar-right" href="profile.html" style="float: right"><i class="fa fa-user fa-lg"></i>&nbsp;Hi, '+data['username']+'</a>';
+				console.log(html);
+				if(data['username']==='admin'){
+					var adm='<p></p>You are the admin, so you are the only one who can add new Show! Do it by clicking <a href="/static/create_event.html">here</a></p>';
+					var res=document.getElementById('admin');
+					res.innerHTML=adm;
+					
+					
+					
+					
+				}
+				var results= document.getElementById('salutUser');
+					results.innerHTML += html;
+				},
+			error:function(){
+					alert("Token non valide");
+			},
+			default: function(){
+					alert("défaut");
+			}             
+		});
+		$.ajax({
+			type:"POST",
+            url: "/profile",        
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+				Token: tok
+			}),
+			success: function(data){
+				var html='<h1 align="center">Hi, ' +data['login']+'</h1>'+'<div class="infos"><h3> My personal informations</h3><p><strong>First Name:&nbsp;</strong>' +data['name']+'</p><p><strong>Surname:&nbsp;</strong>'+ data['surname']+'</p><p><strong>E-mail:&nbsp;</strong>' +data['email']+'</p> <p><strong>Birthdate:&nbsp;</strong>'+data['date']+'</p> <p><strong>Phone Number:&nbsp;</strong>'+ data['phone']+'</p>'
+				var results= document.getElementById('profile');
+				html += '<a class="btn btn-default" href="#" role="button" onclick="update()">Update Profile&nbsp;&nbsp;<i class="fa fa-pencil-square-o fa-lg"></i></a></p>';
+				results.innerHTML += html;  
+				mail = data['email'];
+				phone = data['phone'];
+				console.log(data['name'],data['surname'],data['email'],data['date'],data['phone']);
+				nom=data['surname'];
+				prenom=data['name'];
+			},
+			error:function(){
+					//alert("Token non valide");
+					LogOut();
+			},
+			default: function(){
+					alert("défaut");
+			}    
+		});
+		$.ajax({
+			type:"POST",
+            url: "/shows",        
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+				Token: tok
+			}),
+			success: function(data){
+				var html= '<table class="table table-striped"><thead><tr><th>Name</th><th>Date</th><th>Venue</th><th>Categorie</th><th>Number of tickets</th><th>Who will I meet?&nbsp;<i class="fa fa-male fa-lg"></i><i class="fa fa-female fa-lg"></i></th><th>Ticket&nbsp;&nbsp;<i class="fa fa-tags fa-lg"></i></th></tr></thead>';
+				console.log(data);
+
+				
+				l = data.length;
+				html += '<tbody>';
+				for(i=0; i<l; i++) {
+					var res = data[i]['date'].split("-")
+					console.log(res)
+					var fin = res[2].concat("/",res[1],"/",res[0])
+					console.log(fin)
+					html += '<tr><td>'+data[i]['name']+'</td>';
+					html += '<td>'+fin+'</td>';
+					html += '<td>'+data[i]['salle']+'</td>';
+					html += '<td>'+data[i]['categorie']+'</td>';
+					html += '<td>'+data[i]['places']+'</td>';
+					html += '<td>'+data[i]['person']+'</td>';
+					html += '<td><a href="#" onclick="pdf(\''+data[i]['name']+'\',\''+data[i]['salle']+'\',\''+data[i]['categorie']+'\',\''+data[i]['places']+'\',\''+data[i]['image']+'\')">Download Ticket&nbsp;&nbsp;<i class="fa fa-download fa-lg"></i></a></td></tr>';
+				}
+				html += ' </tbody>'
+				var results= document.getElementById('MyShows');
+				results.innerHTML += html;  
+			}
+		});
+		
+	}         
+			
+
+		function update(){
+			var html='<div class="alert-warning"><div id="MailMess"></div><div id="TelMess"></div></div><br>';
+			html +='<table align="center">';
+			html += '<tr><td>Email&nbsp;</td><td><input value="'+mail+'" class="form-control" type="email" id="Email" onBlur="verifMail(this)"></td></tr>';
+			html +='<tr><td>Phone&nbsp;</td><td><input value="'+phone+'" class="form-control" type="tel" id="PhoneNumber" onBlur="verifNum(this)"></td></tr>';
+			html += '<br><br><tr><td colspan="2" align="center"><a class="btn btn-default" href="#" role="button" onclick="update_confirmation()">Validation&nbsp;&nbsp;<i class="fa fa-check fa-lg"></i></a></td></tr></tabel>';
+			
+			var results= document.getElementById('profile');
+			results.innerHTML = html;  
+
+		}
+		function update_confirmation() {
+			var Email = $('#Email').val();
+			var PhoneNumber = $('#PhoneNumber').val();
+			var tok=localStorage.getItem("token");
+			
+			if (err === 0){
+				console.log("hulala");	
+				$.ajax({
+					type:"POST",
+					url: "/user_update",        
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					data: JSON.stringify({
+						Token: tok,
+						Email: Email,
+						PhoneNumber: PhoneNumber
+					}),
+					success: function(data){
+						if (data['success']) {
+							document.location.href="profile.html" ;
+						}				
+					}
+				});
+			}
+		
+		}
+		
+		
+	</script>
+    <script src='about.js'></script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="logged.html">&nbsp;&nbsp;&nbsp;Home</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<div id="salutUser"></div>
+        	<button type="button" class="logout" id="logOut" onclick="LogOut()" >Log Out</button> 
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<div id="classAbout">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron-bis">
+      <div class="container">
+        <h1>ShowBook</h1>
+      </div>
+    </div>
+		<div id="admin"></div>
+		<div id="profile">  
+       </div>
+      
+		<div id="MyShows">
+			<h3>My Upcoming Shows</h3>
+		</div>
+    </div>
+</div>
+      <hr>
+
+      <footer>
+        <p>©2015 ShowBook by Nader Hariri, Mihai Indricean, Razvan Vatafu & Tristan Velardo</p>
+        <a href="#" onClick="about()">About</a>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="index_fichiers/jquery.js"></script>
+    <script src="index_fichiers/bootstrap.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="index_fichiers/ie10-viewport-bug-workaround.js"></script>
+  
+
+
+
+</body></html>

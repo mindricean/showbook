@@ -1,0 +1,182 @@
+<html><head>
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="file:///home/tvelardo/WEB/favicon.ico">
+
+
+
+    <title>ShowBook | Book Concerts and Meet People!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="index_fichiers/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="index_fichiers/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="index_fichiers/ie-emulation-modes-warning.js"></script>
+    
+    <script src="about.js"></script>
+    <script type=text/javascript>
+		
+		function loginResult() {
+              var Pseudo = $('#Pseudo').val();
+              var Password = $('#Password').val();
+                        
+              $.ajax({
+				type:"POST",
+                url: "/login",        
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+					Pseudo: Pseudo,
+					Password: Password
+				}),
+                success: function(data){
+					if (data['success']) { 
+						console.log(data['token']);
+						// Check browser support
+						if (typeof(Storage) != "undefined") {
+							localStorage.setItem("token", data['token']);
+							document.location.href="logged.html" ;
+						} else {
+							document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+						}
+					}
+					else {
+						window.alert(data['result']);
+					}	
+				},
+				error:function(){
+					document.getElementById("result").innerHTML="Mauvais login ou mdp";
+				},
+				default: function(){
+					alert("défaut");
+				}             
+			});
+		} 
+		
+		window.onload=function(){
+			
+			var tok=localStorage.getItem("token");
+			if (!(tok === null)) {
+				$.ajax({
+					type:"POST",
+					url: "/validate",
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					data: JSON.stringify({
+						token : tok
+					}),
+					success: function(data){
+						if (data['success']) {
+							document.location.href="logged.html";
+						}
+					}
+				});
+			}
+			
+			$.getJSON('/events',function(data){
+				var l = 3;
+				for(i=0;i<l;i++) {
+					console.log(data[i].name);
+					name=data[i].name;
+					pic=data[i].img;
+					date=data[i].date;
+					idShow=data[i].id;
+					console.log(idShow);
+					html =' <div class="col-md-4"><h2>'+name+'</h2> <img src="'+pic+'"'+' alt="Show" height="190" width="135"> <br><br> <p>'+date+'</p></div>';
+					results = document.getElementById('events');
+					results.innerHTML += html;
+				}
+			});
+		}
+	</script> 
+	<script>
+		function runScript(e) {
+			if (e.keyCode == 13) {
+				loginResult();
+				return false;
+			}
+		}
+	</script>
+	</script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">&nbsp;&nbsp;&nbsp;Home</a>
+         
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input placeholder="Pseudo" class="form-control" type="text" id="Pseudo" onkeypress="return runScript(event)">
+            </div>
+            <div class="form-group">
+              <input placeholder="Password" class="form-control" type="password" id="Password" onkeypress="return runScript(event)">
+            </div>
+            <button type="button" class="btn btn-success" id="login" onclick="loginResult()">log in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+<div id='classAbout'>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>ShowBook</h1>
+        <p><a class="btn btn-primary btn-lg" href="signin.html" role="button">Join now !</a></p>
+        <br><br>
+        <p margin-bottom="1">Book your concert tickets and meet people!</p>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row" id="events">
+      </div>
+</div>
+      <hr>
+
+      <footer>
+        <p>©2015 ShowBook by Nader Hariri, Mihai Indricean, Razvan Vatafu & Tristan Velardo</p>
+        <a href="#" onClick="about()">About</a>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="index_fichiers/jquery.js"></script>
+    <script src="index_fichiers/bootstrap.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="index_fichiers/ie10-viewport-bug-workaround.js"></script>
+
+</body></html>

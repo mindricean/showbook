@@ -1,0 +1,84 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.jumbotron {
+    background-image: url("/static/img/background.jpg");
+    background-color: #cccccc;
+  	background-position: center; 
+    color:white;  
+} 
+
+.jumbotron-bis{
+    background-image: url("/static/img/background.jpg");
+    background-color: #cccccc;
+    color:white;  
+
+}
+
+.signin{
+	text-align:center;
+	color: black;
+
+
+}
+.signin input{
+	max-width: 100 px;
+}
+
+.logout{
+  float: right;
+  color: #FFF;
+  background-color: #B30000;
+  border-color: #B30000;
+  padding: 6px 12px;
+  margin-bottom: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -moz-user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: -272px;
+  margin-top: 8px;
+}
+
+
+.logout:hover, .open > .dropdown-toggle.btn-primary {
+    color: #FFF;
+    background-color: #337AB7;
+    border-color: #2E6DA4;
+}
+
+.pseudo-navbar-right{
+  margin-right: 190px;
+  margin-top: 12px;
+  font-size: 18px;
+  color: #1D7ED2;
+
+}
+
+.pseudo-navbar-right:hover{
+  
+  color: #285DB9;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+
+.navbar-brand{
+  
+  background-image: url("home.png");
+  background-repeat: no-repeat;
+  background-position: 50% 46%;
+  width: 15px;
+  
+}

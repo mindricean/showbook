@@ -1,0 +1,175 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="file:///home/tvelardo/WEB/favicon.ico">
+
+    <title>ShowBook | Book Concerts and Meet People!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="index_fichiers/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <!-- Custom styles for this template -->
+    <link href="index_fichiers/jumbotron.css" rel="stylesheet">
+    <script src="book.js"></script>
+    <script src="logout.js"></script>
+    <script src="about.js"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="index_fichiers/ie-emulation-modes-warning.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   
+    <script>
+		var pseudo;
+		var name;
+		window.onload=function(){
+			
+			var tok=localStorage.getItem("token");
+			$.ajax({
+				type:"POST",
+                url: "/users",        
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+					Token: tok,
+				}),
+                success: function(data){
+					pseudo=data['username'];
+				var html= ' <a class="pseudo-navbar-right" href="profile.html" style="float: right"><i class="fa fa-user fa-lg"></i>&nbsp;Hi, '+data['username']+'</a>';					//var html='hellloo';
+					console.log(html);
+					var results= document.getElementById('salutUser');
+					results.innerHTML += html;
+				},
+				error:function(){
+					alert("Token non valide");
+					document.location.href="index.html" 
+				},
+				default: function(){
+					alert("défaut");
+					document.location.href="index.html" 
+				}
+			});
+			showDetails();
+		}	
+    </script>
+	
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+         
+          <a class="navbar-brand" href="logged.html">&nbsp;&nbsp;&nbsp;Home</a>
+        </div>
+         
+        <div id="navbar" class="navbar-collapse collapse">
+			
+           <div id="salutUser"></div>
+         <button type="button" class="logout" id="logOut" onclick="LogOut()" >Log Out</button> 
+          
+        </div><!--/.navbar-collapse -->
+        			
+      </div>
+    </nav>
+<div id="classAbout">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron-bis">
+      <div class="container">
+        <h1>ShowBook</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4", id="evinfos">
+
+        </div>
+        <div class="col-md-4">
+          <form>
+          <h2>Where?</h2>
+          <div id="idVenue"></div>
+         
+          <p>Choose your ticket's category</p>
+          <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Sitting Plan</button>
+
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body" id="plan">
+						
+					</div>
+                </div>
+              </div>
+            </div>
+            
+          </p>
+          <div id="cat">
+		  
+		  </div>
+		  <div id="place">
+		  
+		  </div>
+       </div>
+        <div class="col-md-4">
+          <h2>How?</h2>
+          <p>How many tickets do you want?</p>
+              <select name="Number" id='nbpl'>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+          <p>I want ShowBook to find me people to go to the show with</p>
+              <select name="SBMatch" id="soc">
+                <option value=1>Yes</option>
+                <option value=0>No</option>
+              </select>
+            </br></br>
+          <p><a class="btn btn-default" href="#" role="button" onclick="book()">Buy Now &nbsp;<i class="fa fa-usd fa-lg"></i></a></p>
+          <div id='result' ></div>
+        </div>
+      </form>
+      <br/>
+      <div class="col-md-11">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What?</h2>
+       <div id='description'></div> 
+      </br>
+
+      </div>
+      </div>
+</div>
+      <hr>
+
+      <footer>
+        <p>©2015 ShowBook by Nader Hariri, Mihai Indricean, Razvan Vatafu & Tristan Velardo</p>
+        <a href="#" onClick="about()">About</a>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="index_fichiers/jquery.js"></script>
+    <script src="index_fichiers/bootstrap.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="index_fichiers/ie10-viewport-bug-workaround.js"></script>
+
+</body></html>
